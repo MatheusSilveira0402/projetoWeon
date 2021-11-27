@@ -11,7 +11,8 @@
     "axios": "^0.18.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "v-mask": "^2.3.0",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0-beta.53",
