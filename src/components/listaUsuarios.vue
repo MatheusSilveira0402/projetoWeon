@@ -6,12 +6,14 @@
 		<b-list-group>
 			<hr>
 			<b-list-group-item v-for="(usuario, id) in usuarios" :key="id" >
+				<strong>id:</strong>{{ usuario._id }} <br>
 				<strong>Nome:</strong>{{ usuario.nome }} <br>
 				<strong>CPF: </strong>{{ usuario.cpf }} <br>
 				<strong>CNPJ</strong>{{ usuario.cnpj}} <br>
 				<strong>Foto: </strong>{{ usuario.foto }}<br>
-				<b-button variant="warning" class="btnCarregar" @click="carregar(id)">Carregar</b-button>
-				<b-button variant="danger"  class="ml-2 btnExcluir" @click="excluir(id)">Excluir</b-button>
+				<b-button variant="warning" class="btnCarregar" @click="carregar(usuario._id)">Carregar</b-button>
+				<b-button variant="danger"  class="ml-2 btnExcluir" @click="excluir(usuario._id)">Excluir</b-button>
+				<app-usuario-editar />
 			</b-list-group-item>
 		</b-list-group>
     </b-card>
@@ -31,6 +33,7 @@
 </style>
 
 <script>
+	import AppUsuarioEditar from './atualizar'
 	export default {
 		data(){
 			return {
@@ -38,11 +41,19 @@
 				id: null
 			}
 		}, 
+		components: { AppUsuarioEditar },
 		methods: {
 			obterUsuarios(){
 				this.$http.get('usuario.json').then( res => {
 					this.usuarios = res.data	
 				})
+			},
+			carregar(id){
+				this.id = id
+				this.usuario = { ...this.usuario[id]}
+			},
+			excluir(id) {
+				this.$http.delete(`/${id}`).then(() => this.obterUsuarios())
 			},
 			cadastro() {
 				this.$router.push('cadastro')
