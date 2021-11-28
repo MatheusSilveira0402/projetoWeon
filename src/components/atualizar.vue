@@ -8,3 +8,21 @@
             </b-form-group>
         </b-card>
 </template>
+
+
+<script>
+	export default {
+		data(){
+			return {
+				usuarios: [],
+				id: null
+			}
+		}, 
+		methods: {
+			carregar(id){
+				this.id = id
+				this.usuario = { ...this.usuario[id]}
+			},
+		}
+	}
+</script>

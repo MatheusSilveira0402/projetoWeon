@@ -22,6 +22,10 @@ const router = new VueRouter({
     {
       path: '/',
       component: listaUsuarios
+    },
+    {
+      path: 'editar',
+      component: atualizar
     }
   ]
 })
