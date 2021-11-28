@@ -13,9 +13,9 @@
 			</b-card>
 
 			<b-card>
-				<b-form-group label="Foto:">
-					<b-form-file type="file" size='lg' v-model="usuario.foto"></b-form-file>
-				</b-form-group>
+					<b-form-group label="Foto:">
+						<b-form-file type="file" size='lg' v-model="usuario.foto"></b-form-file>
+					</b-form-group>
 
 					<p v-if="errors.length">
 						<b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
@@ -75,8 +75,7 @@ export default {
 	methods: {
 		limpar(){
 			this.usuario.nome = ''
-			this.usuario.cpf = ''
-			this.usuario.cnpj = ''
+			this.usuario.cpf_ou_cnpj = ''
 			this.usuario.foto = null
 		},
 		salvar(){

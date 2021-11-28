@@ -8,12 +8,12 @@
 			<b-list-group-item v-for="(usuario, id) in usuarios" :key="id" >
 				<strong>id:</strong>{{ usuario._id }} <br>
 				<strong>Nome:</strong>{{ usuario.nome }} <br>
-				<strong>CPF: </strong>{{ usuario.cpf }} <br>
-				<strong>CNPJ</strong>{{ usuario.cnpj}} <br>
+				<strong>CPF/CNPJ: </strong>{{ usuario.cpf_ou_cnpj }} <br>
 				<strong>Foto: </strong>{{ usuario.foto }}<br>
-				<b-button variant="warning" class="btnCarregar" @click="carregar(usuario._id)">Carregar</b-button>
+				<b-button variant="warning" class="btnCarregar" @click="editar">Carregar</b-button>
 				<b-button variant="danger"  class="ml-2 btnExcluir" @click="excluir(usuario._id)">Excluir</b-button>
-				<app-usuario-editar />
+				<hr>
+				<editar v-bind:ids="usuario._id" />
 			</b-list-group-item>
 		</b-list-group>
     </b-card>
@@ -33,15 +33,15 @@
 </style>
 
 <script>
-	import AppUsuarioEditar from './atualizar'
+import editar from './editar.vue'
 	export default {
 		data(){
 			return {
 				usuarios: [],
 				id: null
 			}
-		}, 
-		components: { AppUsuarioEditar },
+		},
+		components: { editar },
 		methods: {
 			obterUsuarios(){
 				this.$http.get('usuario.json').then( res => {
@@ -57,6 +57,9 @@
 			},
 			cadastro() {
 				this.$router.push('cadastro')
+			},
+			editar() {
+				this.$router.push('editar')
 			}
 		}
 	}
