@@ -14,7 +14,7 @@
 
 			<b-card>
 					<b-form-group label="Foto:">
-						<b-form-file type="file" size='lg' v-model="usuario.foto"></b-form-file>
+						<b-form-file type="file" @change="upload"  v-model="usuario.foto" size='lg'></b-form-file>
 					</b-form-group>
 
 					<p v-if="errors.length">
@@ -26,8 +26,8 @@
 			</b-card>
 
 			<hr>
-			<b-button @click="checkForm" size="lg" variant="primary" class="btnCadastrar ml-2">Cadastrar</b-button>
-			<b-button @click="buttonobterusuario" size="lg" variant="success" class="btn ml-2"> Listar Usuario </b-button>
+			<b-button @click="buttonobterusuario" size="lg" variant="primary" class="btnCadastrar ml-2">Lista de Usuarios</b-button>
+			<b-button @click="checkForm" size="lg" variant="success" class="btnCadastrar ml-2">Cadastrar</b-button>
 			<hr>	
 		</b-card>		
 </template>
@@ -55,10 +55,10 @@ export default {
 	data(){
 		return {
 			errors: [],
+			foto: [],
 			usuario: {
 				nome: '',
 				cpf_ou_cnpj: '',
-				foto:''
 			}
 		};
 	},
@@ -73,15 +73,12 @@ export default {
      }, 
 
 	methods: {
-		limpar(){
-			this.usuario.nome = ''
-			this.usuario.cpf_ou_cnpj = ''
-			this.usuario.foto = null
-		},
 		salvar(){
-			this.usuario.foto = Date.now() + this.usuario.foto.name
-			this.$http.post('usuario.json', this.usuario)
-			.then( () => this.limpar())
+			let data = new FormData()
+			data.append('file', this.usuario.foto)
+			console.log(data)
+			this.$http.post('usuario.json', this.usuario, data)
+			.then( () => this.buttonobterusuario())
 		},
 		buttonobterusuario() {
 				this.$router.push('/')
@@ -104,6 +101,11 @@ export default {
 				this.errors.push('A Foto é obrigatória.');
 			}
 			e.preventDefault()
+		},
+		upload(e) {
+			e.preventDefault();
+			var files = e.target.files;
+			this.usuario.foto = files[0];
 		}	
 	}
 }
