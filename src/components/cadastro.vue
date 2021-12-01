@@ -55,10 +55,10 @@ export default {
 	data(){
 		return {
 			errors: [],
-			foto: [],
 			usuario: {
 				nome: '',
 				cpf_ou_cnpj: '',
+				foto: ''
 			}
 		};
 	},
@@ -74,10 +74,7 @@ export default {
 
 	methods: {
 		salvar(){
-			let data = new FormData()
-			data.append('file', this.usuario.foto)
-			console.log(data)
-			this.$http.post('usuario.json', this.usuario, data)
+			this.$http.post('usuario.json', this.usuario)
 			.then( () => this.buttonobterusuario())
 		},
 		buttonobterusuario() {
@@ -86,26 +83,33 @@ export default {
 		checkForm: function (e) {
 			if (this.usuario.nome && this.usuario.cpf_ou_cnpj && this.usuario.foto) {
 				this.salvar()
+				this.send()
 				return true;
 			}
 
 			this.errors = [];
 
 			if (!this.usuario.nome) {
-				this.errors.push('O Nome é obrigatório.');
+				this.errors.push('O Nome é obrigatório.')
 			}
 			if (!this.usuario.cpf_ou_cnpj) {
-				this.errors.push('O CPF ou CNPJ é obrigatória.');
+				this.errors.push('O CPF ou CNPJ é obrigatória.')
 			}
 			if (!this.usuario.foto) {
-				this.errors.push('A Foto é obrigatória.');
+				this.errors.push('A Foto é obrigatória.')
 			}
 			e.preventDefault()
 		},
+		send() {
+			let data = new FormData();
+			data.append('file', this.usuario.foto)
+			
+			//firebase.ref('images/' + this.usuario.foto.name).put(data).then(res => console.log(res))		
+		},
 		upload(e) {
 			e.preventDefault();
-			var files = e.target.files;
-			this.usuario.foto = files[0];
+			var files = e.target.files
+			this.usuario.foto = files[0]
 		}	
 	}
 }

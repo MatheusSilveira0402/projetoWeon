@@ -3,12 +3,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueMask from "v-mask"
 import VueRouter from 'vue-router'
+import firebase from 'firebase'
+
 
 import cadastro from './components/cadastro.vue'
 import listaUsuarios from './components/listaUsuarios.vue'
 
 import './plugins/bootstrap-vue'
 import './plugins/axios'
+
+firebase.
 
 /* área das rotas */
 Vue.use(VueRouter)
