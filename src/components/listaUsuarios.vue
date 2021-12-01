@@ -10,7 +10,6 @@
 				<hr>
 				<strong>Nome:</strong>{{ usuario.nome }} <br>
 				<strong>CPF/CNPJ: </strong>{{ usuario.cpf_ou_cnpj }} <br>
-				<img src="http://52.66.40.75/box_c4bdf6bbf9b494d9be37/" alt="">
 				<b-button variant="warning" class="btnCarregar" v-on:click="seen = !seen">Alterar</b-button>
 				<b-button variant="danger"  class="ml-2 btnExcluir" @click="excluir(usuario._id)">Excluir</b-button>
 				<hr>
@@ -44,14 +43,18 @@ import editar from './editar.vue'
 			return {
 				usuarios: [],
 				id: null,
-				seen: false
+				seen: false,
+				offset: 0,
+				limit: 2,
+				total: 0,
 			}
 		},
 		components: { editar },
 		methods: {
 			obterUsuarios(){
-				this.$http.get('usuario.json').then( res => {
-					this.usuarios = res.data	
+				this.$http.get(`usuario.json?page=${this.offset}&size=${this.limit}`).then( res => {
+					this.usuarios = res.data
+					console.log(res)	
 				})
 			},
 			carregar(id){

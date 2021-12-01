@@ -14,7 +14,7 @@
 
 			<b-card>
 					<b-form-group label="Foto:">
-						<b-form-file type="file" @change="upload" name="file"  v-model="usuario.foto" size='lg'></b-form-file>
+						<b-form-file type="file" @change="upload" name="file"  id="file"  v-model="usuario.foto" size='lg'></b-form-file>
 					</b-form-group>
 
 					<p v-if="errors.length">
@@ -54,6 +54,7 @@ export default {
 	data(){
 		return {
 			errors: [],
+			file: '',
 			usuario: {
 				nome: '',
 				cpf_ou_cnpj: '',
@@ -74,6 +75,7 @@ export default {
 
 	methods: {
 		salvar(){
+			
 			this.$http.post('usuario.json', this.usuario)
 			.then( () => this.buttonobterusuario())
 		},
@@ -82,8 +84,8 @@ export default {
 		},
 		checkForm: function (e) {
 			if (this.usuario.nome && this.usuario.cpf_ou_cnpj && this.usuario.foto) {
-				this.salvar()
 				this.send()
+				this.salvar()
 				return true;
 			}
 
@@ -101,12 +103,15 @@ export default {
 			e.preventDefault()
 		},
 		send() {
-			axios.post('http://192.168.0.13:8000/upload',  this.usuario.foto)
+			var formData = new FormData();
+			formData.append('file', this.file)
+			axios.post('http://192.168.0.13:8000/upload', formData)
+			this.usuario.foto = this.usuario.foto.name
 		},
 		upload(e) {
 			e.preventDefault();
 			var files = e.target.files
-			this.usuario.foto = files[0]
+			this.file = files[0]
 		}	
 	}
 }
