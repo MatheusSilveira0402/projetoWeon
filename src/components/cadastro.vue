@@ -14,7 +14,7 @@
 
 			<b-card>
 					<b-form-group label="Foto:">
-						<b-form-file type="file" @change="upload"  v-model="usuario.foto" size='lg'></b-form-file>
+						<b-form-file type="file" @change="upload" name="file"  v-model="usuario.foto" size='lg'></b-form-file>
 					</b-form-group>
 
 					<p v-if="errors.length">
@@ -48,8 +48,7 @@
 }
 </style>
 <script>
-
-
+import axios from 'axios'
 export default {
 	
 	data(){
@@ -59,7 +58,8 @@ export default {
 				nome: '',
 				cpf_ou_cnpj: '',
 				foto: ''
-			}
+			},
+			image: ''
 		};
 	},
 	computed: {
@@ -101,10 +101,7 @@ export default {
 			e.preventDefault()
 		},
 		send() {
-			let data = new FormData();
-			data.append('file', this.usuario.foto)
-			
-			//firebase.ref('images/' + this.usuario.foto.name).put(data).then(res => console.log(res))		
+			axios.post('http://192.168.0.13:8000/upload',  this.usuario.foto)
 		},
 		upload(e) {
 			e.preventDefault();

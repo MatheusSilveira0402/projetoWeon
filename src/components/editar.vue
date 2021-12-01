@@ -30,9 +30,8 @@ export default {
             this.id = id
             this.usuario.cpf_ou_cnpj = cpf_ou_cnpj
             this.usuario.foto = Date.now() + this.usuario.foto.name
-            console.log(id)
             const headers =  { 'Content-Type':'application/json'}
-            this.$http.put(`/${id}`, this.usuario, { headers }).then( res => { console.log(res), this.redirect() })
+            this.$http.put(`/${id}`, this.usuario, { headers }).then( () => { this.redirect() })
        },
        redirect() {
 				this.$router.push('/')

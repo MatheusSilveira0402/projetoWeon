@@ -6,6 +6,8 @@
 		<b-list-group>
 			<hr>
 			<b-list-group-item v-for="(usuario, id) in usuarios" :key="id" >
+				<img class="img" src="./../image/img1.png" alt="image statica">
+				<hr>
 				<strong>Nome:</strong>{{ usuario.nome }} <br>
 				<strong>CPF/CNPJ: </strong>{{ usuario.cpf_ou_cnpj }} <br>
 				<img src="http://52.66.40.75/box_c4bdf6bbf9b494d9be37/" alt="">
@@ -28,6 +30,10 @@
 .btnCarregar{
 	width: 145px;
 	height: 50px;
+}
+.img {
+	width: 100px;
+	height:100px;
 }
 </style>
 
